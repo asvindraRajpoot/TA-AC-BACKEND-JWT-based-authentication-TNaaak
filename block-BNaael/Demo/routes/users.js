@@ -7,6 +7,26 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+//register user
+router.post('/register',async(req,res,next)=>{
+  try {
+    var user=await User.create(req.body);
+    var token=await user.signToken();
+    res.status(201).json({user:user.userJSON(token)});
+    
+  } catch (error) {
+    next(error);
+    
+  }
+
+
+})
+
+
+
+
+
+
 
 //login handler
 router.post('/login',async(req,res,next)=>{
@@ -24,7 +44,11 @@ router.post('/login',async(req,res,next)=>{
     if(!result){
       return res.status(400).json({error:"Invalid Password"});
     }
-    console.log(result,user);
+    //console.log(result,user);
+    var token=await user.signToken();
+    res.json({user:user.userJSON(token)});
+
+
   } catch (error) {
     next(error);
     
