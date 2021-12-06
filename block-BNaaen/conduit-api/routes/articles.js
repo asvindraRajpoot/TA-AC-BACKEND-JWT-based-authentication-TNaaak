@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
     res.status(400).json({ error: "please search right article" });
   }
 });
-
+//feed
 router.get("/feed", async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);
