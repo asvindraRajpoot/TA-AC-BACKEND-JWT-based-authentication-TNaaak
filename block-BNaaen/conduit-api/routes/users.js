@@ -7,18 +7,20 @@ const auth = require("../middlewares/auth");
 
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body.user);
+    console.log(req.body.user,'inside post');
     const user = await User.create(req.body.user);
     var token = await user.signToken();
-    console.log(token);
+    console.log(token,'register user');
     res.json({ user: user.userJson(token) });
   } catch (error) {
+    console.log(token,'token');
     res.status(400).send(error);
   }
 });
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body.user;
+  console.log(email,password,req.body.user);
   if (!email || !password) {
     res.status(400).json({ error: "Email/password required" });
   }
